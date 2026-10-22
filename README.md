@@ -1,4 +1,4 @@
-This project was developed as part of the CMPSC 463 – Design and Analysis of Algorithms course at Penn State Abington. The project report can be found below, and the instructions & requirements for the project can be found in [`instr.md`](instr.md)
+This project was developed as part of the CMPSC 463 – Design and Analysis of Algorithms course at Penn State Abington. The project report can be found below, and the instructions & requirements for the project can be found in [`instr.md`](instr.md).
 
 To run the programs, clone the repository and set up an environment with Numpy installed (`pip install numpy`). Each part of the project is self-contained in a separate Python file that can each be run directly.
 
@@ -611,3 +611,27 @@ The recursive division reduces the size of each partition until the base-case li
 The reported number of bursts depends on not only the thresholds, but also the rule(s) used to combine overlapping groups of bursts. This implementation applies a greedy non-overlapping convention when converting candidate windows into final bursts.
 
 As discussed in section 4.3, the total number of bursts and the number of events included in those bursts were recorded for each configuration. As would be expected, increasing the maximum timespan `T` of a qualifying burst consistently increased the number of bursts detected, and increasing the minimum number of events `M` decreased teh number of bursts detected. A table of the results can be found in section 4.3.
+
+## 6. Conclusions
+
+### 6.1. Key Lessons Learned
+
+This project demonstrates how divide-and-conquer algorithms can be applied to different types of distributed log analysis.
+
+The K-way merger illustrates how a large collection of sorted data streams can be combined efficiently through recursive two-way merging. Lazy loading provides an additional memory-efficiency benefit by reading entries only when they are needed.
+
+Strassen's matrix multiplication demonstrates how recursive matrix operations can reduce the number of multiplications required compared with conventional matrix multiplication. Applying this algorithm to the component dependency matrix makes it possible to examine two-hop and three-hop paths through the observed system transition network.
+
+The burst detection algorithm demonstrates how a timeline can be divided into smaller intervals while still identifying patterns that cross partition boundaries. Its correctness depends on consistently applying the time-span and minimum-event-count conditions, as well as avoiding duplicate counts when constructing non-overlapping bursts.
+
+Together, the three algorithms illustrate that divide and conquer is not limited to one type of problem and is can be useful in practice. As shown in this project, it can be applied to stream merging, matrix computation, and temporal pattern detection, provided that each algorithm has a well-defined structure, including a base case and a correct combine step.
+
+### 6.2. Challenges Encountered
+
+One challenge was preserving chronological order while merging multiple files without loading their complete contents into memory. The recursive merging structure and lazy reading approach address this challenge, although intermediate file management and repeated timestamp parsing require attention.
+
+A second challenge was implementing Strassen's algorithm correctly for matrices whose dimensions are not powers of two. Padding the matrices and removing the extra rows and columns provides a general solution, but the recursive multiplication formulae must be implemented carefully and verified against an independent reference calculation.
+
+The burst detection algorithm presented a different challenge: A burst can cross the midpoint of a recursive partition, and overlapping qualifying windows can represent the same region of activity. The biggest challenge of the implementation was deciding how to handle overlapping groups of bursts. Ultimately, the implementation uses a greedy convention to produce non-overlapping bursts. Defining this convention clearly was necessary for consistent results.
+
+Finally, evaluating the algorithms on the complete dataset required checking correctness in addition to recording numerical outputs. Comparing input and output entry counts, verifying chronological ordering, validating matrix products, and inspecting detected bursts help to ensure that the results reflect the intended algorithm definitions.
