@@ -1,3 +1,7 @@
+This project was developed as part of the CMPSC 463 – Design and Analysis of Algorithms course at Penn State Abington. The project report can be found below, and the instructions & requirements for the project can be found in [`instr.md`](instr.md)
+
+To run the programs, clone the repository and set up an environment with Numpy installed (`pip install numpy`). Each part of the project is self-contained in a separate Python file that can each be run directly.
+
 # Divide-and-Conquer Algorithms on Distributed System Logs
 
 ## 1. Project Description
