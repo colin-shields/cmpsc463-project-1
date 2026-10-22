@@ -90,7 +90,18 @@ if __name__ == "__main__":
     if not os.path.exists(PATH):
         merge_dir("data", PATH)
 
-    num_bursts, bursts = detect_bursts(PATH, 20, timedelta(seconds=1), 5)
-    print(f"{num_bursts} bursts were found in the data.")
-    for burst in bursts:
-        print(f"Timespan: {burst['end_time'] - burst['start_time']} | Number of logs: {len(burst['lines'])} | idx: {burst['lines'][0][0]}")
+    cases = {
+        (10, 0.5),
+        (10, 1),
+        (10, 2),
+        (20, 0.5),
+        (20, 1),
+        (20, 2)
+    }
+    for i, (m, t) in enumerate(sorted(cases)):
+        num_bursts, bursts = detect_bursts(PATH, m, timedelta(seconds=t), 5)
+        print(f"Case {i + 1}: m = {m}, t = {t}s")
+        print(f"\t{num_bursts} bursts were found in the data.")
+        for burst in bursts:
+            print(f"\tTimespan: {burst['end_time'] - burst['start_time']} | Number of logs: {len(burst['lines'])}")
+        print()
